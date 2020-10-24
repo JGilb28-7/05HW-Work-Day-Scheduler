@@ -1,8 +1,10 @@
+//need to create document link
 //create var/let
 // function
 //need to loop over the time 
 //moment
 // local storage
+    // need to store the data for each hour 
 // color change
 /*Hour 1.0.0+
 
