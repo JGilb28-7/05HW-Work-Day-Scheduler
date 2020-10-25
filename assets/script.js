@@ -1,32 +1,52 @@
-// display the date in the - used several options - needed to remove the text I added
-let currentDay = $("#currentDay");
+let currentDay = $("#currentDay"); //needed to add the .append
 let m = moment();
-currentDay.append(m.format(" dddd[,] LL"));
+currentDay.append(m.format("dddd, MMMM Do YYYY, h:mm:ss a"));
 
-////create var/let - var stringVariable = "string"; - var numberVariable = 12;
-let container = $(".container")
-let dataObj = JSON.parse(localStorage.getItem("allData")) || {};
-let hours = ["8:00am", "9:00am", "10:00am", "11:00am", "12:00pm", "1:00pm", "2:00pm", "3:00pm", "4:00pm", "5:00pm"];
-let values = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+//  Click listner event for the button
 
-// function
+$(".saveBtn").on("click", function () {
+  console.log(this);
+  var text = $(this).siblings(".description").val();
+  var time = $(this).parent().attr("id");
+  
+  localStorage.setItem("time", "text");
 
-//need to loop over the time 
-//(let=0; i=0 < Array.length; i++)
+})
 
-//moment
+$("#hour9 .description").val(localStorage.getItem("hour9"));
+$("#hour10 .description").val(localStorage.getItem("hour10"));
+$("#hour11 .description").val(localStorage.getItem("hour11"));
+$("#hour12 .description").val(localStorage.getItem("hour12"));
+$("#hour13 .description").val(localStorage.getItem("hour13"));
+$("#hour14 .description").val(localStorage.getItem("hour14"));
+$("#hour15 .description").val(localStorage.getItem("hour15"));
+$("#hour16 .description").val(localStorage.getItem("hour16"));
+$("#hour17 .description").val(localStorage.getItem("hour17"));
+ 
+  function hourTracker() {
+    //get current number of hours.
+    var currentHour = moment().hour();
 
-// local storage
-    // need to store the data for each hour 
-    //localStorage.setItem("the_key", "a value");
-    //var valueFromLocalStorage = localStorage.getItem("the_key");
+        // loop over time blocks
+     $(".time-block").each(function () {
+        var blockHour = parseInt($(this).attr("id").split("hour")[1]);
+         console.log( blockHour, currentHour)
 
-// color change
-/*Hour 1.0.0+
-
-moment().hour(Number);
-moment().hour(); // Number
-moment().hours(Number);
-moment().hours(); // Number
-Gets or sets the hour.
-
+            //check if we've moved past this time
+        if (blockHour < currentHour) {
+            $(this).addClass("past");
+            $(this).removeClass("future");
+            $(this).removeClass("present");
+            } 
+            else if (blockHour === currentHour){
+            $(this).removeClass("past");
+            $(this).addClass("present");
+            $(this).removeClass("future");
+           } else {
+            $(this).removeClass("present");
+            $(this).removeClass("past");
+            $(this).addClass("future");
+            }
+        })
+    }
+    hourTracker();
